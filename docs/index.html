@@ -55,228 +55,74 @@
             <button class="filter-btn" data-filter="all">すべて</button>
         </div>
 
-        <!-- 在庫一覧（すべて：要注意を上位表示） -->
-        <ul class="inventory-list">
-            <!-- ===== 要注意アイテム ===== -->
-
-            <!-- いちご（2〜3日）要注意 -->
-            <li class="inventory-item" data-category="食材" data-alert="要注意" onclick="location.href='detail.html'">
-                <div class="item-status">
-                    <span class="status-dot dot-red"></span>
-                </div>
-                <div class="item-info">
-                    <span class="item-name">いちご</span>
-                    <span class="item-date">入庫: 4/1</span>
-                </div>
-                <div class="item-qty">3パック</div>
-                <div class="item-badge">
-                    <span class="badge badge-expiry">期限近</span>
-                </div>
-            </li>
-
-            <!-- 生クリーム（5日前後）要注意 -->
-            <li class="inventory-item" data-category="食材" data-alert="要注意" onclick="location.href='detail.html'">
-                <div class="item-status">
-                    <span class="status-dot dot-yellow"></span>
-                </div>
-                <div class="item-info">
-                    <span class="item-name">生クリーム</span>
-                    <span class="item-date">入庫: 3/30</span>
-                </div>
-                <div class="item-qty">2パック</div>
-                <div class="item-badge">
-                    <span class="badge badge-low">残少</span>
-                </div>
-            </li>
-
-            <!-- モカ豆（約180日）要注意 -->
-            <li class="inventory-item" data-category="コーヒー豆" data-alert="要注意" onclick="location.href='detail.html'">
-                <div class="item-status">
-                    <span class="status-dot dot-yellow"></span>
-                </div>
-                <div class="item-info">
-                    <span class="item-name">モカ豆</span>
-                    <span class="item-date">入庫: 3/15</span>
-                </div>
-                <div class="item-qty">1kg</div>
-                <div class="item-badge">
-                    <span class="badge badge-low">残少</span>
-                </div>
-            </li>
-
-            <!-- ミネラルウォーター（約365日）要注意 -->
-            <li class="inventory-item" data-category="食材" data-alert="要注意" onclick="location.href='detail.html'">
-                <div class="item-status">
-                    <span class="status-dot dot-red"></span>
-                </div>
-                <div class="item-info">
-                    <span class="item-name">ミネラルウォーター</span>
-                    <span class="item-date">入庫: 2/10</span>
-                </div>
-                <div class="item-qty">2本</div>
-                <div class="item-badge">
-                    <span class="badge badge-expiry">要発注</span>
-                </div>
-            </li>
-
-            <!-- コーヒーフィルター（消費期限なし）要注意 -->
-            <li class="inventory-item" data-category="消耗品" data-alert="要注意" onclick="location.href='detail.html'">
-                <div class="item-status">
-                    <span class="status-dot dot-yellow"></span>
-                </div>
-                <div class="item-info">
-                    <span class="item-name">コーヒーフィルター</span>
-                    <span class="item-date">入庫: 3/20</span>
-                </div>
-                <div class="item-qty">20枚</div>
-                <div class="item-badge">
-                    <span class="badge badge-low">残少</span>
-                </div>
-            </li>
-
-            <!-- ===== 通常アイテム（期限短い順） ===== -->
-
-            <!-- 牛乳（1週間） -->
-            <li class="inventory-item" data-category="食材" data-alert="" onclick="location.href='detail.html'">
-                <div class="item-status">
-                    <span class="status-dot dot-green"></span>
-                </div>
-                <div class="item-info">
-                    <span class="item-name">牛乳</span>
-                    <span class="item-date">入庫: 3/31</span>
-                </div>
-                <div class="item-qty">3本</div>
-                <div class="item-badge"></div>
-            </li>
-
-            <!-- ブラジル豆（約180日） -->
-            <li class="inventory-item" data-category="コーヒー豆" data-alert="" onclick="location.href='detail.html'">
-                <div class="item-status">
-                    <span class="status-dot dot-green"></span>
-                </div>
-                <div class="item-info">
-                    <span class="item-name">ブラジル豆</span>
-                    <span class="item-date">入庫: 3/1</span>
-                </div>
-                <div class="item-qty">3kg</div>
-                <div class="item-badge"></div>
-            </li>
-
-            <!-- コロンビア豆（約180日） -->
-            <li class="inventory-item" data-category="コーヒー豆" data-alert="" onclick="location.href='detail.html'">
-                <div class="item-status">
-                    <span class="status-dot dot-green"></span>
-                </div>
-                <div class="item-info">
-                    <span class="item-name">コロンビア豆</span>
-                    <span class="item-date">入庫: 3/5</span>
-                </div>
-                <div class="item-qty">2kg</div>
-                <div class="item-badge"></div>
-            </li>
-
-            <!-- ブレンド豆（約180日） -->
-            <li class="inventory-item" data-category="コーヒー豆" data-alert="" onclick="location.href='detail.html'">
-                <div class="item-status">
-                    <span class="status-dot dot-green"></span>
-                </div>
-                <div class="item-info">
-                    <span class="item-name">ブレンド豆</span>
-                    <span class="item-date">入庫: 3/10</span>
-                </div>
-                <div class="item-qty">4kg</div>
-                <div class="item-badge"></div>
-            </li>
-
-            <!-- 小麦粉（約180日） -->
-            <li class="inventory-item" data-category="食材" data-alert="" onclick="location.href='detail.html'">
-                <div class="item-status">
-                    <span class="status-dot dot-green"></span>
-                </div>
-                <div class="item-info">
-                    <span class="item-name">小麦粉</span>
-                    <span class="item-date">入庫: 3/1</span>
-                </div>
-                <div class="item-qty">2kg</div>
-                <div class="item-badge"></div>
-            </li>
-
-            <!-- 砂糖（約365日） -->
-            <li class="inventory-item" data-category="食材" data-alert="" onclick="location.href='detail.html'">
-                <div class="item-status">
-                    <span class="status-dot dot-green"></span>
-                </div>
-                <div class="item-info">
-                    <span class="item-name">砂糖</span>
-                    <span class="item-date">入庫: 2/15</span>
-                </div>
-                <div class="item-qty">3kg</div>
-                <div class="item-badge"></div>
-            </li>
-
-            <!-- 紙ナプキン（消費期限なし） -->
-            <li class="inventory-item" data-category="消耗品" data-alert="" onclick="location.href='detail.html'">
-                <div class="item-status">
-                    <span class="status-dot dot-green"></span>
-                </div>
-                <div class="item-info">
-                    <span class="item-name">紙ナプキン</span>
-                    <span class="item-date">入庫: 3/25</span>
-                </div>
-                <div class="item-qty">5袋</div>
-                <div class="item-badge"></div>
-            </li>
-
-            <!-- ストロー（消費期限なし） -->
-            <li class="inventory-item" data-category="消耗品" data-alert="" onclick="location.href='detail.html'">
-                <div class="item-status">
-                    <span class="status-dot dot-green"></span>
-                </div>
-                <div class="item-info">
-                    <span class="item-name">ストロー</span>
-                    <span class="item-date">入庫: 3/15</span>
-                </div>
-                <div class="item-qty">2箱</div>
-                <div class="item-badge"></div>
-            </li>
-
-            <!-- 砂糖の小袋（消費期限なし） -->
-            <li class="inventory-item" data-category="消耗品" data-alert="" onclick="location.href='detail.html'">
-                <div class="item-status">
-                    <span class="status-dot dot-green"></span>
-                </div>
-                <div class="item-info">
-                    <span class="item-name">砂糖の小袋</span>
-                    <span class="item-date">入庫: 3/20</span>
-                </div>
-                <div class="item-qty">3箱</div>
-                <div class="item-badge"></div>
-            </li>
-        </ul>
+        <!-- 在庫一覧（JSで動的生成） -->
+        <ul class="inventory-list" id="inventory-list"></ul>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/app.js"></script>
     <script>
-        // 初期表示：要注意タブがデフォルト
-        document.querySelectorAll('.inventory-item').forEach(item => {
-            item.style.display = item.dataset.alert === '要注意' ? '' : 'none';
-        });
+        // データ読み込み・描画
+        function render(filter) {
+            const items = loadItems();
+            const summary = calcSummary(items);
 
+            // サマリー更新
+            document.querySelector('.summary-total .summary-number').textContent = summary.total;
+            document.querySelector('.summary-order .summary-number').textContent = summary.orderCount;
+            document.querySelector('.summary-low .summary-number').textContent = summary.lowCount;
+
+            // 一覧を要注意優先でソート
+            const alertItems = items.filter(i => i.alert === '要注意');
+            const normalItems = items.filter(i => i.alert !== '要注意');
+            const sorted = [...alertItems, ...normalItems];
+
+            const list = document.getElementById('inventory-list');
+            list.innerHTML = '';
+
+            sorted.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'inventory-item';
+                li.dataset.category = item.category;
+                li.dataset.alert = item.alert;
+                li.onclick = () => location.href = 'detail.html?item=' + encodeURIComponent(item.name);
+
+                li.innerHTML = `
+                    <div class="item-status">
+                        <span class="status-dot dot-${item.dot}"></span>
+                    </div>
+                    <div class="item-info">
+                        <span class="item-name">${item.name}</span>
+                        <span class="item-date">入庫: ${item.stocked}</span>
+                    </div>
+                    <div class="item-qty">${item.qty}${item.unit}</div>
+                    <div class="item-badge">
+                        ${item.badge ? `<span class="badge ${item.badgeClass}">${item.badge}</span>` : ''}
+                    </div>
+                `;
+
+                // フィルター適用
+                if (filter === 'all') {
+                    li.style.display = '';
+                } else if (filter === '要注意') {
+                    li.style.display = item.alert === '要注意' ? '' : 'none';
+                } else {
+                    li.style.display = item.category === filter ? '' : 'none';
+                }
+
+                list.appendChild(li);
+            });
+        }
+
+        // 初期描画（要注意がデフォルト）
+        render('要注意');
+
+        // フィルタータブ
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', function () {
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
-
-                const filter = this.dataset.filter;
-                document.querySelectorAll('.inventory-item').forEach(item => {
-                    if (filter === 'all') {
-                        item.style.display = '';
-                    } else if (filter === '要注意') {
-                        item.style.display = item.dataset.alert === '要注意' ? '' : 'none';
-                    } else {
-                        item.style.display = item.dataset.category === filter ? '' : 'none';
-                    }
-                });
+                render(this.dataset.filter);
             });
         });
     </script>
