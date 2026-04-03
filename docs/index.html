@@ -48,22 +48,25 @@
 
         <!-- フィルタータブ -->
         <div class="filter-tabs">
-            <button class="filter-btn active" data-filter="all">すべて</button>
+            <button class="filter-btn active" data-filter="要注意">要注意</button>
             <button class="filter-btn" data-filter="食材">食材</button>
             <button class="filter-btn" data-filter="コーヒー豆">コーヒー豆</button>
             <button class="filter-btn" data-filter="消耗品">消耗品</button>
-            <button class="filter-btn" data-filter="要注意">要注意</button>
+            <button class="filter-btn" data-filter="all">すべて</button>
         </div>
 
-        <!-- 在庫一覧（消費期限が短い順） -->
+        <!-- 在庫一覧（すべて：要注意を上位表示） -->
         <ul class="inventory-list">
-            <!-- いちご（2〜3日） -->
+            <!-- ===== 要注意アイテム ===== -->
+
+            <!-- いちご（2〜3日）要注意 -->
             <li class="inventory-item" data-category="食材" data-alert="要注意" onclick="location.href='detail.html'">
                 <div class="item-status">
                     <span class="status-dot dot-red"></span>
                 </div>
                 <div class="item-info">
                     <span class="item-name">いちご</span>
+                    <span class="item-date">入庫: 4/1</span>
                 </div>
                 <div class="item-qty">3パック</div>
                 <div class="item-badge">
@@ -71,19 +74,67 @@
                 </div>
             </li>
 
-            <!-- 生クリーム（5日前後） -->
+            <!-- 生クリーム（5日前後）要注意 -->
             <li class="inventory-item" data-category="食材" data-alert="要注意" onclick="location.href='detail.html'">
                 <div class="item-status">
                     <span class="status-dot dot-yellow"></span>
                 </div>
                 <div class="item-info">
                     <span class="item-name">生クリーム</span>
+                    <span class="item-date">入庫: 3/30</span>
                 </div>
                 <div class="item-qty">2パック</div>
                 <div class="item-badge">
                     <span class="badge badge-low">残少</span>
                 </div>
             </li>
+
+            <!-- モカ豆（約180日）要注意 -->
+            <li class="inventory-item" data-category="コーヒー豆" data-alert="要注意" onclick="location.href='detail.html'">
+                <div class="item-status">
+                    <span class="status-dot dot-yellow"></span>
+                </div>
+                <div class="item-info">
+                    <span class="item-name">モカ豆</span>
+                    <span class="item-date">入庫: 3/15</span>
+                </div>
+                <div class="item-qty">1kg</div>
+                <div class="item-badge">
+                    <span class="badge badge-low">残少</span>
+                </div>
+            </li>
+
+            <!-- ミネラルウォーター（約365日）要注意 -->
+            <li class="inventory-item" data-category="食材" data-alert="要注意" onclick="location.href='detail.html'">
+                <div class="item-status">
+                    <span class="status-dot dot-red"></span>
+                </div>
+                <div class="item-info">
+                    <span class="item-name">ミネラルウォーター</span>
+                    <span class="item-date">入庫: 2/10</span>
+                </div>
+                <div class="item-qty">2本</div>
+                <div class="item-badge">
+                    <span class="badge badge-expiry">要発注</span>
+                </div>
+            </li>
+
+            <!-- コーヒーフィルター（消費期限なし）要注意 -->
+            <li class="inventory-item" data-category="消耗品" data-alert="要注意" onclick="location.href='detail.html'">
+                <div class="item-status">
+                    <span class="status-dot dot-yellow"></span>
+                </div>
+                <div class="item-info">
+                    <span class="item-name">コーヒーフィルター</span>
+                    <span class="item-date">入庫: 3/20</span>
+                </div>
+                <div class="item-qty">20枚</div>
+                <div class="item-badge">
+                    <span class="badge badge-low">残少</span>
+                </div>
+            </li>
+
+            <!-- ===== 通常アイテム（期限短い順） ===== -->
 
             <!-- 牛乳（1週間） -->
             <li class="inventory-item" data-category="食材" data-alert="" onclick="location.href='detail.html'">
@@ -92,6 +143,7 @@
                 </div>
                 <div class="item-info">
                     <span class="item-name">牛乳</span>
+                    <span class="item-date">入庫: 3/31</span>
                 </div>
                 <div class="item-qty">3本</div>
                 <div class="item-badge"></div>
@@ -104,6 +156,7 @@
                 </div>
                 <div class="item-info">
                     <span class="item-name">ブラジル豆</span>
+                    <span class="item-date">入庫: 3/1</span>
                 </div>
                 <div class="item-qty">3kg</div>
                 <div class="item-badge"></div>
@@ -116,23 +169,10 @@
                 </div>
                 <div class="item-info">
                     <span class="item-name">コロンビア豆</span>
+                    <span class="item-date">入庫: 3/5</span>
                 </div>
                 <div class="item-qty">2kg</div>
                 <div class="item-badge"></div>
-            </li>
-
-            <!-- モカ豆（約180日） -->
-            <li class="inventory-item" data-category="コーヒー豆" data-alert="要注意" onclick="location.href='detail.html'">
-                <div class="item-status">
-                    <span class="status-dot dot-yellow"></span>
-                </div>
-                <div class="item-info">
-                    <span class="item-name">モカ豆</span>
-                </div>
-                <div class="item-qty">1kg</div>
-                <div class="item-badge">
-                    <span class="badge badge-low">残少</span>
-                </div>
             </li>
 
             <!-- ブレンド豆（約180日） -->
@@ -142,6 +182,7 @@
                 </div>
                 <div class="item-info">
                     <span class="item-name">ブレンド豆</span>
+                    <span class="item-date">入庫: 3/10</span>
                 </div>
                 <div class="item-qty">4kg</div>
                 <div class="item-badge"></div>
@@ -154,6 +195,7 @@
                 </div>
                 <div class="item-info">
                     <span class="item-name">小麦粉</span>
+                    <span class="item-date">入庫: 3/1</span>
                 </div>
                 <div class="item-qty">2kg</div>
                 <div class="item-badge"></div>
@@ -166,23 +208,10 @@
                 </div>
                 <div class="item-info">
                     <span class="item-name">砂糖</span>
+                    <span class="item-date">入庫: 2/15</span>
                 </div>
                 <div class="item-qty">3kg</div>
                 <div class="item-badge"></div>
-            </li>
-
-            <!-- ミネラルウォーター（約365日） -->
-            <li class="inventory-item" data-category="食材" data-alert="要注意" onclick="location.href='detail.html'">
-                <div class="item-status">
-                    <span class="status-dot dot-red"></span>
-                </div>
-                <div class="item-info">
-                    <span class="item-name">ミネラルウォーター</span>
-                </div>
-                <div class="item-qty">2本</div>
-                <div class="item-badge">
-                    <span class="badge badge-expiry">要発注</span>
-                </div>
             </li>
 
             <!-- 紙ナプキン（消費期限なし） -->
@@ -192,23 +221,10 @@
                 </div>
                 <div class="item-info">
                     <span class="item-name">紙ナプキン</span>
+                    <span class="item-date">入庫: 3/25</span>
                 </div>
                 <div class="item-qty">5袋</div>
                 <div class="item-badge"></div>
-            </li>
-
-            <!-- コーヒーフィルター（消費期限なし） -->
-            <li class="inventory-item" data-category="消耗品" data-alert="要注意" onclick="location.href='detail.html'">
-                <div class="item-status">
-                    <span class="status-dot dot-yellow"></span>
-                </div>
-                <div class="item-info">
-                    <span class="item-name">コーヒーフィルター</span>
-                </div>
-                <div class="item-qty">20枚</div>
-                <div class="item-badge">
-                    <span class="badge badge-low">残少</span>
-                </div>
             </li>
 
             <!-- ストロー（消費期限なし） -->
@@ -218,6 +234,7 @@
                 </div>
                 <div class="item-info">
                     <span class="item-name">ストロー</span>
+                    <span class="item-date">入庫: 3/15</span>
                 </div>
                 <div class="item-qty">2箱</div>
                 <div class="item-badge"></div>
@@ -230,6 +247,7 @@
                 </div>
                 <div class="item-info">
                     <span class="item-name">砂糖の小袋</span>
+                    <span class="item-date">入庫: 3/20</span>
                 </div>
                 <div class="item-qty">3箱</div>
                 <div class="item-badge"></div>
@@ -239,6 +257,11 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // 初期表示：要注意タブがデフォルト
+        document.querySelectorAll('.inventory-item').forEach(item => {
+            item.style.display = item.dataset.alert === '要注意' ? '' : 'none';
+        });
+
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', function () {
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
