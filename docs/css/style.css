@@ -1,0 +1,424 @@
+/* ========================================
+   喫茶店 在庫管理アプリ - スタイルシート
+   ======================================== */
+
+/* 全体 */
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: #f5f5f5;
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.app-container {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 16px;
+    padding-bottom: calc(32px + env(safe-area-inset-bottom));
+}
+
+/* ヘッダー */
+.app-header {
+    margin-bottom: 20px;
+}
+
+.app-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.app-date {
+    font-size: 0.85rem;
+    color: #888;
+    margin: 4px 0 0 0;
+}
+
+/* サマリーカード */
+.summary-cards {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.summary-card {
+    flex: 1;
+    text-align: center;
+    padding: 12px 8px;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    text-decoration: none;
+    color: inherit;
+}
+
+.summary-number {
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.summary-label {
+    font-size: 0.75rem;
+    color: #888;
+    margin-top: 2px;
+}
+
+.summary-total .summary-number {
+    color: #333;
+}
+
+.summary-order .summary-number {
+    color: #e53935;
+}
+
+.summary-low .summary-number {
+    color: #f9a825;
+}
+
+/* フィルタータブ */
+.filter-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.filter-btn {
+    flex-shrink: 0;
+    padding: 6px 16px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    background: #fff;
+    font-size: 0.85rem;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+@media (hover: hover) {
+    .filter-btn:hover {
+        border-color: #aaa;
+    }
+}
+
+.filter-btn.active {
+    background: #333;
+    color: #fff;
+    border-color: #333;
+}
+
+/* 在庫一覧 */
+.inventory-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.inventory-item {
+    display: flex;
+    align-items: center;
+    padding: 14px 12px;
+    background: #fff;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+@media (hover: hover) {
+    .inventory-item:hover {
+        background: #fafafa;
+    }
+}
+
+.inventory-item:active {
+    background: #f0f0f0;
+}
+
+/* ステータスドット */
+.item-status {
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.status-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.dot-green {
+    background-color: #4caf50;
+}
+
+.dot-yellow {
+    background-color: #f9a825;
+}
+
+.dot-red {
+    background-color: #e53935;
+}
+
+/* 品目情報 */
+.item-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.item-name {
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+/* 数量 */
+.item-qty {
+    font-size: 0.9rem;
+    color: #666;
+    margin-left: 8px;
+    white-space: nowrap;
+}
+
+/* バッジ */
+.item-badge {
+    margin-left: 8px;
+    flex-shrink: 0;
+}
+
+.badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.badge-expiry {
+    background-color: #e53935;
+    color: #fff;
+}
+
+.badge-low {
+    background-color: #f9a825;
+    color: #fff;
+}
+
+/* ========================================
+   画面2: 品目詳細・更新
+   ======================================== */
+
+.detail-header {
+    margin-bottom: 16px;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.9rem;
+    color: #666;
+    text-decoration: none;
+}
+
+.back-link:active {
+    color: #333;
+}
+
+.detail-title-section {
+    margin-bottom: 28px;
+}
+
+.detail-item-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.detail-category {
+    font-size: 0.85rem;
+    color: #888;
+    margin: 4px 0 0 0;
+}
+
+.qty-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.qty-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    background: #fff;
+    font-size: 1.3rem;
+    color: #333;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.qty-btn:active {
+    background: #f0f0f0;
+    border-color: #bbb;
+}
+
+.qty-display {
+    text-align: center;
+}
+
+.qty-number {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.qty-unit {
+    display: block;
+    font-size: 0.85rem;
+    color: #888;
+    margin-top: 4px;
+}
+
+.detail-info-list {
+    background: #fff;
+    border-radius: 12px;
+    padding: 4px 0;
+    margin-bottom: 32px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.detail-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.detail-info-row:last-child {
+    border-bottom: none;
+}
+
+.detail-info-label {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.detail-info-value {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.value-warn {
+    color: #e53935;
+    font-weight: 600;
+}
+
+.detail-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-cancel {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    background: #fff;
+    font-size: 0.95rem;
+    color: #666;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.btn-cancel:active {
+    background: #f0f0f0;
+}
+
+.btn-save {
+    flex: 1;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    background: #4caf50;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.btn-save:active {
+    background: #388e3c;
+}
+
+/* ========================================
+   画面3: アラート一覧
+   ======================================== */
+
+.alert-page-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0 0 4px 0;
+}
+
+.alert-page-subtitle {
+    font-size: 0.85rem;
+    color: #888;
+    margin: 0 0 24px 0;
+}
+
+.alert-section {
+    margin-bottom: 24px;
+}
+
+.alert-section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0 0 12px 4px;
+}
+
+.section-title-red {
+    color: #e53935;
+}
+
+.section-title-yellow {
+    color: #c89100;
+}
+
+.item-sub {
+    display: block;
+    font-size: 0.75rem;
+    color: #aaa;
+    margin-top: 2px;
+}
