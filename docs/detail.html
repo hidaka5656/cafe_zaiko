@@ -52,9 +52,19 @@
                 <span class="detail-info-value" id="info-group">---</span>
             </div>
             <div class="detail-info-row">
+                <span class="detail-info-label">入庫者</span>
+                <span class="detail-info-value" id="info-stockedby">---</span>
+            </div>
+            <div class="detail-info-row">
                 <span class="detail-info-label">最終更新</span>
                 <span class="detail-info-value" id="info-updated">---</span>
             </div>
+        </div>
+
+        <!-- 更新者の選択 -->
+        <div class="staff-select-section">
+            <label class="staff-select-label">更新者を選択</label>
+            <div class="staff-select-buttons" id="staff-buttons"></div>
         </div>
 
         <!-- ボタン -->
@@ -87,7 +97,23 @@
         document.getElementById('info-expiry').textContent = item.expiry;
         document.getElementById('info-group').textContent = item.group;
         document.getElementById('info-updated').textContent = item.lastUpdated || '---';
+        document.getElementById('info-stockedby').textContent = item.stockedBy || '---';
         document.title = item.name + ' - 在庫管理';
+
+        // 更新者ボタンを生成
+        let selectedStaff = item.stockedBy || STAFF_LIST[0];
+        const staffContainer = document.getElementById('staff-buttons');
+        STAFF_LIST.forEach(name => {
+            const btn = document.createElement('button');
+            btn.className = 'staff-btn' + (name === selectedStaff ? ' active' : '');
+            btn.textContent = name;
+            btn.addEventListener('click', function () {
+                staffContainer.querySelectorAll('.staff-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                selectedStaff = name;
+            });
+            staffContainer.appendChild(btn);
+        });
 
         // 数量の増減
         const qtyNumber = document.getElementById('qty-number');
@@ -110,7 +136,7 @@
             const now = new Date();
             const timeStr = now.getMonth() + 1 + '/' + now.getDate() + ' ' +
                             now.getHours() + ':' + String(now.getMinutes()).padStart(2, '0');
-            updateItem(item.name, { qty: qty, lastUpdated: timeStr });
+            updateItem(item.name, { qty: qty, stockedBy: selectedStaff, lastUpdated: timeStr + ' ' + selectedStaff });
             window.location.href = 'index.html';
         });
     </script>

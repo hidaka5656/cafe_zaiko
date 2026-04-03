@@ -436,3 +436,43 @@ body {
     color: #aaa;
     margin-top: 2px;
 }
+
+/* スタッフ選択 */
+.staff-select-section {
+    margin: 20px 0;
+    padding: 16px;
+    background: #fff;
+    border-radius: 12px;
+}
+
+.staff-select-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.staff-select-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.staff-btn {
+    flex: 1;
+    padding: 10px 8px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    background: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.staff-btn.active {
+    border-color: #4a90d9;
+    background: #eef4fb;
+    color: #4a90d9;
+}
