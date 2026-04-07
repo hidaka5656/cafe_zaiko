@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>在庫管理 - 喫茶店</title>
+
+    <!-- OGP / Twitter Card -->
+    <meta property="og:title" content="喫茶店の在庫管理アプリ">
+    <meta property="og:description" content="老舗喫茶店の在庫をスマホで誰でも簡単に管理。在庫切れ・発注タイミングを逃さない。">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="喫茶店の在庫管理アプリ">
+    <meta name="twitter:description" content="老舗喫茶店の在庫をスマホで誰でも簡単に管理。在庫切れ・発注タイミングを逃さない。">
+
+    <!-- モバイル最適化 -->
+    <meta name="theme-color" content="#f5f5f5">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container app-container">
+        <!-- ヘッダー -->
+        <header class="app-header">
+            <h1 class="app-title">在庫管理</h1>
+            <p class="app-date">2026年4月2日（木）</p>
+        </header>
+
+        <!-- サマリーカード -->
+        <div class="summary-cards">
+            <div class="summary-card summary-total">
+                <div class="summary-number">14</div>
+                <div class="summary-label">品目数</div>
+            </div>
+            <a href="alerts.html" class="summary-card summary-order">
+                <div class="summary-number">2</div>
+                <div class="summary-label">要発注</div>
+            </a>
+            <a href="alerts.html" class="summary-card summary-low">
+                <div class="summary-number">3</div>
+                <div class="summary-label">在庫少</div>
+            </a>
+        </div>
+
+        <!-- フィルタータブ -->
+        <div class="filter-tabs">
+            <button class="filter-btn active" data-filter="要注意">要注意</button>
+            <button class="filter-btn" data-filter="食材">食材</button>
+            <button class="filter-btn" data-filter="コーヒー豆">コーヒー豆</button>
+            <button class="filter-btn" data-filter="消耗品">消耗品</button>
+            <button class="filter-btn" data-filter="all">すべて</button>
+        </div>
+
+        <!-- 在庫一覧（JSで動的生成） -->
+        <ul class="inventory-list" id="inventory-list"></ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        // データ読み込み・描画
+        function render(filter) {
+            const items = loadItems();
+            const summary = calcSummary(items);
+
+            // サマリー更新
+            document.querySelector('.summary-total .summary-number').textContent = summary.total;
+            document.querySelector('.summary-order .summary-number').textContent = summary.orderCount;
+            document.querySelector('.summary-low .summary-number').textContent = summary.lowCount;
+
+            // 一覧を要注意優先でソート
+            const alertItems = items.filter(i => i.alert === '要注意');
+            const normalItems = items.filter(i => i.alert !== '要注意');
+            const sorted = [...alertItems, ...normalItems];
+
+            const list = document.getElementById('inventory-list');
+            list.innerHTML = '';
+
+            sorted.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'inventory-item';
+                li.dataset.category = item.category;
+                li.dataset.alert = item.alert;
+                li.onclick = () => location.href = 'detail.html?item=' + encodeURIComponent(item.name);
+
+                li.innerHTML = `
+                    <div class="item-status">
+                        <span class="status-dot dot-${item.dot}"></span>
+                    </div>
+                    <div class="item-info">
+                        <span class="item-name">${item.name}</span>
+                        <span class="item-date">入庫: ${item.stocked}（${item.stockedBy || '---'}）</span>
+                    </div>
+                    <div class="item-qty">${item.qty}${item.unit}</div>
+                    <div class="item-badge">
+                        ${item.badge ? `<span class="badge ${item.badgeClass}">${item.badge}</span>` : ''}
+                    </div>
+                `;
+
+                // フィルター適用
+                if (filter === 'all') {
+                    li.style.display = '';
+                } else if (filter === '要注意') {
+                    li.style.display = item.alert === '要注意' ? '' : 'none';
+                } else {
+                    li.style.display = item.category === filter ? '' : 'none';
+                }
+
+                list.appendChild(li);
+            });
+        }
+
+        // 初期描画（要注意がデフォルト）
+        render('要注意');
+
+        // フィルタータブ
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                render(this.dataset.filter);
+            });
+        });
+    </script>
+</body>
+</html>
