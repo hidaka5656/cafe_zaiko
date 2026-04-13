@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>品目詳細 - 在庫管理</title>
+    <title>{{ item["name"] }} - 在庫詳細</title>
     <meta name="theme-color" content="#f5f5f5">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -12,84 +12,142 @@
 </head>
 <body>
     <div class="container app-container">
-        <!-- ヘッダー（戻るボタン付き） -->
         <header class="detail-header">
-            <a href="/" class="back-link"><i class="bi bi-chevron-left"></i> 戻る</a>
+            <a href="{{ url_for('index') }}" class="back-link"><i class="bi bi-chevron-left"></i> 戻る</a>
         </header>
 
-        <!-- 品目名・カテゴリ -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="mb-3">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ 'warning' if category == 'warning' else 'success' }} mb-2" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% if errors %}
+            <div class="alert alert-danger" role="alert">
+                <ul class="mb-0 ps-3">
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
         <div class="detail-title-section">
-            <h1 class="detail-item-name">いちご</h1>
-            <p class="detail-category">食材 / 日配品</p>
+            <h1 class="detail-item-name">{{ item["name"] }}</h1>
+            <p class="detail-category">{{ item["category"] }} / {{ item["order_group"] }}</p>
         </div>
 
-        <!-- 数量コントロール -->
-        <div class="qty-control">
-            <button class="qty-btn qty-minus" id="btn-minus">－</button>
-            <div class="qty-display">
-                <span class="qty-number" id="qty-number">3</span>
-                <span class="qty-unit">パック</span>
-            </div>
-            <button class="qty-btn qty-plus" id="btn-plus">＋</button>
-        </div>
+        <form method="post" action="{{ url_for('adjust_item', item_name=item['name']) }}">
+            <input type="hidden" name="target_quantity" id="target-quantity" value="{{ target_quantity }}">
 
-        <!-- 詳細情報 -->
-        <div class="detail-info-list">
-            <div class="detail-info-row">
-                <span class="detail-info-label">入庫日</span>
-                <span class="detail-info-value">2026年4月1日</span>
+            <div class="qty-control">
+                <button type="button" class="qty-btn qty-minus" id="btn-minus">-</button>
+                <div class="qty-display">
+                    <span class="qty-number" id="qty-number">{{ target_quantity }}</span>
+                    <span class="qty-unit">{{ item["unit"] }}</span>
+                </div>
+                <button type="button" class="qty-btn qty-plus" id="btn-plus">+</button>
             </div>
-            <div class="detail-info-row">
-                <span class="detail-info-label">最低在庫</span>
-                <span class="detail-info-value">2パック</span>
-            </div>
-            <div class="detail-info-row">
-                <span class="detail-info-label">消費期限の目安</span>
-                <span class="detail-info-value value-warn">2〜3日</span>
-            </div>
-            <div class="detail-info-row">
-                <span class="detail-info-label">発注グループ</span>
-                <span class="detail-info-value">日配品</span>
-            </div>
-            <div class="detail-info-row">
-                <span class="detail-info-label">最終更新</span>
-                <span class="detail-info-value">今日 8:45</span>
-            </div>
-            <div class="detail-info-row">
-                <span class="detail-info-label">更新者</span>
-                <span class="detail-info-value">店主</span>
-            </div>
-        </div>
 
-        <!-- ボタン -->
-        <div class="detail-actions">
-            <a href="/" class="btn-cancel">キャンセル</a>
-            <button class="btn-save" id="btn-save">保存する</button>
-        </div>
+            <p class="text-center text-muted small mb-4">
+                減らす操作は FEFO で減算し、増やす操作は調整ロットとして追加します。
+            </p>
+
+            <div class="detail-info-list">
+                <div class="detail-info-row">
+                    <span class="detail-info-label">現在在庫</span>
+                    <span class="detail-info-value">{{ item["total_remaining"]|format_quantity }}{{ item["unit"] }}</span>
+                </div>
+                <div class="detail-info-row">
+                    <span class="detail-info-label">最小在庫</span>
+                    <span class="detail-info-value">{{ item["minimum_stock"]|format_quantity }}{{ item["unit"] }}</span>
+                </div>
+                <div class="detail-info-row">
+                    <span class="detail-info-label">最短の消費期限</span>
+                    <span class="detail-info-value {% if item['alert_kind'] == 'warning' or item['alert_kind'] == 'order' %}value-warn{% endif %}">
+                        {{ item["nearest_expiry"] if item["nearest_expiry"] else "-" }}
+                    </span>
+                </div>
+                <div class="detail-info-row">
+                    <span class="detail-info-label">発注グループ</span>
+                    <span class="detail-info-value">{{ item["order_group"] }}</span>
+                </div>
+                <div class="detail-info-row">
+                    <span class="detail-info-label">有効ロット数</span>
+                    <span class="detail-info-value">{{ item["active_lot_count"] }}</span>
+                </div>
+                <div class="detail-info-row">
+                    <span class="detail-info-label">状態</span>
+                    <span class="detail-info-value">{{ item["status_text"] }}</span>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h2 class="h6 mb-0">現在のロット状況</h2>
+                        <a href="{{ url_for('inventory') }}" class="btn btn-sm btn-outline-secondary">登録ページへ</a>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-sm align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>残数</th>
+                                    <th>入荷日</th>
+                                    <th>消費期限</th>
+                                    <th>仕入先</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for lot in lots %}
+                                    <tr>
+                                        <td>{{ lot["remaining_quantity"]|format_quantity }}{{ item["unit"] }}</td>
+                                        <td>{{ lot["received_date"] }}</td>
+                                        <td>{{ lot["expiry_date"] if lot["expiry_date"] else "-" }}</td>
+                                        <td>{{ lot["supplier_name"] if lot["supplier_name"] else "-" }}</td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="4" class="text-center text-muted">有効なロットはありません。</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-actions">
+                <a href="{{ url_for('inventory') }}" class="btn-cancel">在庫一覧</a>
+                <button type="submit" class="btn-save">数量を保存</button>
+            </div>
+        </form>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // 数量の増減
-        const qtyNumber = document.getElementById('qty-number');
-        let qty = parseInt(qtyNumber.textContent);
+        const qtyNumber = document.getElementById("qty-number");
+        const targetQuantity = document.getElementById("target-quantity");
+        let quantity = parseInt(targetQuantity.value, 10);
 
-        document.getElementById('btn-minus').addEventListener('click', function () {
-            if (qty > 0) {
-                qty--;
-                qtyNumber.textContent = qty;
+        document.getElementById("btn-minus").addEventListener("click", function () {
+            if (quantity > 0) {
+                quantity -= 1;
+                qtyNumber.textContent = quantity;
+                targetQuantity.value = quantity;
             }
         });
 
-        document.getElementById('btn-plus').addEventListener('click', function () {
-            qty++;
-            qtyNumber.textContent = qty;
-        });
-
-        // 保存ボタン（静的なのでアラートで仮対応）
-        document.getElementById('btn-save').addEventListener('click', function () {
-            alert('保存しました（仮）：いちご ' + qty + 'パック');
-            window.location.href = '/';
+        document.getElementById("btn-plus").addEventListener("click", function () {
+            quantity += 1;
+            qtyNumber.textContent = quantity;
+            targetQuantity.value = quantity;
         });
     </script>
 </body>
